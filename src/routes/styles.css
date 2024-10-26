@@ -1,0 +1,146 @@
+:root {
+    font-family: helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --primary: #00aeff
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+button:not(:disabled):hover,
+a:not(:disabled):hover,
+details summary:hover {
+    cursor: pointer;
+}
+
+.btn {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    border: none;
+    border-top: 3px solid #c2c2c2;
+    border-radius: 40px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 1px 0 #2D2D2D, 0 2px 0 #2D2D2D, 0 3px 0 #2C2C2C, 0 4px 0 #2A2A2A, 0 0 0 6px black, 0 4px 0 6px black, 0 0 0 7px #222, 0 4px 0 7px #222;
+    padding: 15px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin: 1rem;
+    text-decoration: none;
+    color: #242424;
+    background-image: -webkit-radial-gradient(50% 0%, 8% 50%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient(50% 100%, 12% 50%, hsla(0, 0%, 100%, .6) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient(0% 50%, 50% 7%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-radial-gradient(100% 50%, 50% 5%, hsla(0, 0%, 100%, .5) 0%, hsla(0, 0%, 100%, 0) 100%), -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 3%, hsla(0, 0%, 0%, .1) 3.5%), -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 6%, hsla(0, 0%, 100%, .1) 7.5%), -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 1.2%, hsla(0, 0%, 100%, .2) 2.2%), -webkit-radial-gradient(50% 50%, 200% 50%, hsla(0, 0%, 90%, 1) 5%, hsla(0, 0%, 85%, 1) 30%, hsla(0, 0%, 60%, 1) 100%);
+    transition: all .5s ease;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    color: var(--primary);
+    text-shadow: 0px -1px 2px var(--primary), 0px 1px 2px var(--primary);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 1px 0 #2D2D2D, 0 2px 0 #2D2D2D, 0 3px 0 #2C2C2C, 0 4px 0 #2A2A2A, 0 0 0 6px black, 0 4px 0 6px black, 0 0 0 7px #222, 0 4px 0 7px #222, 0px 0px 3px #00aeff, 0px 0px 15px #00aeff, 0px 0px 15px #93d9fa;
+
+}
+
+.btn:before,
+.btn:after {
+    content: "";
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background-image: -webkit-radial-gradient(50% 0%, 10% 50%, hsla(0, 0%, 0%, .1) 0%, hsla(0, 0%, 0%, 0) 100%), -webkit-radial-gradient(50% 100%, 10% 50%, hsla(0, 0%, 0%, .1) 0%, hsla(0, 0%, 0%, 0) 100%), -webkit-radial-gradient(0% 50%, 50% 10%, hsla(0, 0%, 0%, .1) 0%, hsla(0, 0%, 0%, 0) 100%), -webkit-radial-gradient(100% 50%, 50% 06%, hsla(0, 0%, 0%, .1) 0%, hsla(0, 0%, 0%, 0) 100%);
+}
+
+.btn:before {
+    transform: rotate(65deg);
+}
+
+.btn:after {
+    transform: rotate(-65deg);
+}
+
+.btn:active {
+    border-top: 0px solid #dde1e7;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 1px 0 #2D2D2D, 0 2px 0 #2D2D2D, 0 3px 0 #2C2C2C, 0 4px 0 #2A2A2A, 0 0 0 6px black, 0 4px 0 6px black, 0 0 0 7px #222, 0 4px 0 7px #222, 0px 0px 5px #00aeff, 0px 0px 50px #00aeff, 0px 0px 50px #93d9fa;
+    transform: translateY(4px);
+}
+
+.btn.red {
+    color: rgb(174, 4, 4);
+}
+
+.btn.blue {
+    color: rgb(42, 42, 234);
+}
+
+.inpbtn {
+    display: flex;
+}
+
+.inpbtn>* {
+    border-radius: 0;
+}
+
+.inpbtn>input {
+    border-bottom-left-radius: 1rem;
+    padding-left: .5rem;
+}
+
+.inpbtn>button {
+    font-weight: bold;
+    font-size: large;
+    border-top-right-radius: 1rem;
+}
+
+article {
+    background-color: #000000cc;
+    padding: 1rem;
+}
+
+article header,
+details summary {
+    border-bottom: 5px solid #fff3;
+    font-size: larger;
+    font-weight: bold;
+}
+
+details[open] summary~* {
+    animation: sweep .5s ease-in-out;
+}
+
+details summary {
+    cursor: pointer;
+    transition: margin 150ms ease-out;
+}
+
+details[open] summary {
+    margin-bottom: 10px;
+}
+
+@keyframes sweep {
+    0% {
+        opacity: 0;
+        margin-left: -10px
+    }
+
+    100% {
+        opacity: 1;
+        margin-left: 0px
+    }
+}
