@@ -1,10 +1,10 @@
 # Spyfall Companion
 
-Spiele Spyfall ohne Zettel
+Spiele Spyfall ohne Zettelberg
 
-<a href="https://knrdl.github.io/spyfall/" style="display: flex; place-items: center; gap: 1rem; font-size: xx-large; margin-bottom: 4rem">
+<a href="https://knrdl.github.io/spyfall/">
 <img src="static/favicon.png">
-Spiel starten
+<h2>Spiel starten</h2>
 </a>
 
 

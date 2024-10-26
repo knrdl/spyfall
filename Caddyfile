@@ -1,0 +1,7 @@
+:8080 {
+    try_files {path} {path}.html /
+    root * /var/www
+    file_server {
+        precompressed gzip br
+    }
+}
