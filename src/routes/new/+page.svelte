@@ -73,7 +73,7 @@
                         <button
                             type="button"
                             title="Löschen"
-                            style="background-color: brown; border: none; border-radius: 100%;width: 1.25rem;"
+                            style="background-color: brown; border: none; border-radius: 100%;width: 1.25rem;color:white;"
                             onclick={() => {
                                 locations.splice(locations.indexOf(location), 1);
                                 locations = locations;
@@ -108,7 +108,7 @@
 
         <section style="display: flex; justify-content: center;align-items: center; margin-top: 1rem">
             <button type="button" onclick={() => createGame(roundMinutes, locations)} class="btn blue"> Spiel erstellen </button>
-            <a href="/" class="btn red">Abbrechen</a>
+            <a href="./" class="btn red">Abbrechen</a>
         </section>
     </article>
 {:else}

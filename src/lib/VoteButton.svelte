@@ -23,6 +23,7 @@
         font-size: x-large;
         margin: 1rem;
         position: relative;
+        color: white;
     }
 
     .vote:disabled{

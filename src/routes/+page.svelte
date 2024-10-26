@@ -6,8 +6,8 @@
 </a>
 
 <div class="buttons">
-    <a href="/new" class="btn">Spiel erstellen</a>
-    <a href="/join" class="btn">Spiel beitreten</a>
+    <a href="./new" class="btn">Spiel erstellen</a>
+    <a href="./join" class="btn">Spiel beitreten</a>
 </div>
 
 <style>

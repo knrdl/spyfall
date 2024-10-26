@@ -3,7 +3,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
+    color-scheme: dark light;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
 
@@ -12,7 +12,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --primary: #00aeff
+    --primary: #00aeff;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -95,6 +99,14 @@ details summary:hover {
 
 .inpbtn>* {
     border-radius: 0;
+    background-color: #2D2D2D;
+    color: #eee;
+    border: 1px solid var(--primary);
+    padding: 5px 10px;
+}
+
+.inpbtn>*:focus {
+    outline: 2px solid var(--primary);
 }
 
 .inpbtn>input {
@@ -111,6 +123,18 @@ details summary:hover {
 article {
     background-color: #000000cc;
     padding: 1rem;
+    animation: slide-top 0.25s forwards;
+}
+
+
+@keyframes slide-top {
+    from {
+        margin-top: -1rem;
+    }
+
+    to {
+        margin-top: 0;
+    }
 }
 
 article header,

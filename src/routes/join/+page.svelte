@@ -19,7 +19,7 @@
             <QrCodeScanner />
         </section>
         <section>
-            <a href="/" class="btn">Zurück</a>
+            <a href="./" class="btn">Zurück</a>
         </section>
     {:else if gameState.playerCount}
         {#if gameState.locations}
@@ -52,7 +52,7 @@
         <section>Verbinde ...</section>
 
         <section style="display: flex; justify-content: center;">
-            <a href="/" class="btn">Zurück</a>
+            <a href="./" class="btn">Zurück</a>
         </section>
     {/if}
 </article>
