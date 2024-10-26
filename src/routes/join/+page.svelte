@@ -31,7 +31,13 @@
             </section>
         {/if}
         <section>
-            <header>Spielregeln</header>
+            <header>
+                Spielregeln
+
+                <a style="float: right; color:#ccc" target="_blank" rel="noopener noreferrer" href="https://spielewiki.org/wiki/Spyfall">
+                    Anleitung</a
+                >
+            </header>
             <ol style="padding-left:1rem">
                 <li>Ihr befindet euch alle am selben Ort</li>
                 <li>Der Spion unter euch kennt ihn nicht</li>

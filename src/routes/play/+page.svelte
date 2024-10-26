@@ -5,6 +5,8 @@
     import { fade } from 'svelte/transition';
     import Loader from '../../lib/Loader.svelte';
     import VoteButton from '../../lib/VoteButton.svelte';
+    import { playVote, playBuzzer, playAlarmClock } from '../../lib/sounds';
+    import TallyMarks from './TallyMarks.svelte';
 
     let intervalHandle;
     let secondsLeft = $state();
@@ -23,6 +25,7 @@
         secondsLeft = gameState.roundMinutes * 60 - Math.floor((new Date().getTime() - gameState.startEpoch) / 1000);
         if (secondsLeft <= 0) {
             secondsLeft = 0;
+            playAlarmClock()
             clearInterval(intervalHandle);
         }
     }
@@ -37,8 +40,10 @@
     });
 
     function requestVote() {
-        if (canVote) gameState.connection.requestVote();
-        else alert('Du darfst nur einmal pro Runde abstimmen lassen!');
+        if (canVote) {
+            playBuzzer();
+            gameState.connection.requestVote();
+        } else alert('Du darfst nur einmal pro Runde abstimmen lassen!');
     }
 
     function respondVote(accept) {
@@ -52,9 +57,25 @@
         <progress value={secondsLeft} min="0" max={gameState.roundMinutes * 60} title={fmtTimeLeft(secondsLeft)}></progress>
     </section>
 
+    <section style="display: flex; place-items: center;justify-content:center; flex-wrap: wrap;font-size: larger;">
+        <div style="margin-right: 2rem;">
+            <div>Runde</div>
+            <TallyMarks value={7} />
+        </div>
+        <div>
+            <div>gewonnen</div>
+            <TallyMarks value={5} />
+        </div>
+    </section>
+
     <section>
         <details open>
-            <summary>Ort</summary>
+            <summary
+                >Ort
+                <a style="float: right; font-weight: 100; font-size: smaller; color:#ccc;margin-right:.5rem" target="_blank" rel="noopener noreferrer" href="https://spielewiki.org/wiki/Spyfall">
+                    Anleitung</a
+                >
+            </summary>
             <LocationsList locations={gameState.locations} selectedLocation={gameState.location} />
         </details>
     </section>
@@ -92,11 +113,23 @@
             </div>
         {:else}
             <div style="display: flex; flex-wrap: wrap" in:fade>
-                <VoteButton accept waiting={gameState.currentVoteAccepted === true} disabled={gameState.currentVoteAccepted !== null} onclick={() => respondVote(true)}
-                    >Zustimmen</VoteButton
+                <VoteButton
+                    accept
+                    waiting={gameState.currentVoteAccepted === true}
+                    disabled={gameState.currentVoteAccepted !== null}
+                    onclick={() => {
+                        playVote();
+                        respondVote(true);
+                    }}>Zustimmen</VoteButton
                 >
-                <VoteButton reject waiting={gameState.currentVoteAccepted === false} disabled={gameState.currentVoteAccepted !== null} onclick={() => respondVote(false)}
-                    >Ablehnen</VoteButton
+                <VoteButton
+                    reject
+                    waiting={gameState.currentVoteAccepted === false}
+                    disabled={gameState.currentVoteAccepted !== null}
+                    onclick={() => {
+                        playVote();
+                        respondVote(false);
+                    }}>Ablehnen</VoteButton
                 >
             </div>
         {/if}
