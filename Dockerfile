@@ -1,4 +1,4 @@
-FROM docker.io/node:22-alpine as builder
+FROM docker.io/node:23-alpine as builder
 
 WORKDIR /app
 COPY . .
