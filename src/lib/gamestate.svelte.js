@@ -29,7 +29,7 @@ function initGame() {
         role: undefined,
         gameId: undefined,
         playerCount: 1,
-        connectionIds: new Set(), // only follower connections
+        connectionIds: new Set(), // only follower connections, only maintained by leader
         myConnectionId: undefined,  // gameId = leader
         spyConnectionId: undefined, // gameId = leader is the spy
         roundMinutes: 0,
@@ -54,14 +54,11 @@ class GameLeaderConnection extends LeaderConnection {
     }
 
     onFollowerConnecting(followerConnectionId) {
-        if (gameState.mode === 'join' && followerConnectionId !== gameState.gameId && followerConnectionId.length > 0) {
-            gameState.connectionIds.add(followerConnectionId)
-            return true
-        }
-        return false
+        return (gameState.mode === 'join')
     }
 
     async onFollowerConnected(followerConnectionId) {
+        gameState.connectionIds.add(followerConnectionId)
         await this.respond(followerConnectionId, 'init-game', { roundMinutes: gameState.roundMinutes, locations: gameState.locations })
         await this.broadcast('player-count', gameState.connectionIds.size + 1)
     }

@@ -50,8 +50,7 @@ export class LeaderConnection extends Connection {
                 this.onPeering(id)
 
                 this.#peer.on('connection', (conn) => {
-                    if (this.onFollowerConnecting(conn.peer)) {
-                        this.#connections.set(conn.peer, conn)
+                    if (conn.peer !== this.#gameId && conn.peer.length > 0 && this.onFollowerConnecting(conn.peer)) {
                         conn.on('data', async ({ type, payload }) => {
                             this.onMessage(conn.peer, type, payload)
                         })
@@ -64,8 +63,12 @@ export class LeaderConnection extends Connection {
                         conn.on('error', (e) => console.error('leader conn error:', e))
 
                         conn.on('open', async () => {
+                            this.#connections.set(conn.peer, conn)
                             this.onFollowerConnected(conn.peer)
                         })
+                    } else {
+                        console.log('connection attempt canceled')
+                        conn.close()
                     }
                 })
 
