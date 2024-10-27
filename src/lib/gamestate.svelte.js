@@ -181,7 +181,7 @@ async function onMessage(connectionId, type, payload, iAmLeader, isFromLeader) {
                 gameState.location = payload.location
                 gameState.mode = 'play'
                 if (gameState.roundWinners.length === 0) // first round
-                    goto('/play')
+                    goto('./play')
             } break
 
         case 'request-vote':
