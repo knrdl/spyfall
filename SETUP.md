@@ -17,6 +17,8 @@ docker build -t spyfall .
 docker run -it --rm -p8080:8080 spyfall
 ```
 
+or use the prebuilt image: `docker run -it --rm -p8080:8080 ghcr.io/knrdl/spyfall:edge`
+
 # Development
 
 ```shell
