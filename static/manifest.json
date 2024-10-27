@@ -1,8 +1,12 @@
 {
   "name": "SpyFall",
+  "description": "Spyfall Spiel",
   "theme_color": "#00aeff",
   "background_color": "#2e2e2e",
   "short_name": "SpyFall",
+  "orientation": "portrait",
+  "lang": "de",
+  "start_url": ".",
   "categories": [
     "games"
   ],
