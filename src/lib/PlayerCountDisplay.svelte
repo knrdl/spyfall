@@ -2,19 +2,19 @@
     import { spring } from 'svelte/motion';
     import { gameState } from './gamestate.svelte';
 
-    const displayed_count = spring(0);
+    const displayedCount = spring(0);
 
     $effect(() => {
-        if (gameState.playerCount > 0) $displayed_count = gameState.playerCount;
+        if (gameState.playerCount > 0) displayedCount.set(gameState.playerCount);
     });
 </script>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;font-size: x-large;">
     Warte auf Mitspielende . . .
     <div class="counter-viewport">
-        <div class="counter-digits" style="transform: translate(0, {100 * ($displayed_count % 1)}%)">
-            <strong class="hidden" aria-hidden="true">{Math.floor($displayed_count + 1)}</strong>
-            <strong>{Math.floor($displayed_count)}</strong>
+        <div class="counter-digits" style="transform: translate(0, {100 * (($displayedCount >= 1 ? $displayedCount : 1) % 1)}%)">
+            <strong class="hidden" aria-hidden="true">{Math.max(Math.floor($displayedCount + 1), 1)}</strong>
+            <strong>{Math.max(Math.floor($displayedCount), 1)}</strong>
         </div>
     </div>
     / 3+
