@@ -2,7 +2,7 @@
 </script>
 
 <a href="https://github.com/knrdl/spyfall">
-    <h1>SpyFall</h1>
+    <h1>Spy&shy;Fall</h1>
 </a>
 
 <div class="buttons">
@@ -20,16 +20,18 @@
         background-clip: text;
         color: rgba(0, 0, 0, 0.3);
         text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 15px;
-        word-wrap: break-word;
+        overflow: hidden;
 
         animation: fade 1s backwards;
     }
 
-    h1:before {
-        content: '»';
-    }
-    h1:after {
-        content: '«';
+    @media only screen and (min-width: 350px) {
+        h1:before {
+            content: '»';
+        }
+        h1:after {
+            content: '«';
+        }
     }
 
     .buttons {

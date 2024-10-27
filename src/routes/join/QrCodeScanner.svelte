@@ -16,7 +16,7 @@
                 videoElement,
                 (result) => {
                     const gameUrl = result.data;
-                    if (gameUrl.startsWith(location.origin + location.pathname) && gameUrl.includes('id=')) {
+                    if (gameUrl.startsWith(location.origin + location.pathname.replace('/new', '/join')) && gameUrl.includes('id=')) {
                         goto(gameUrl);
                     } else {
                         errMsg = 'Falsche Webadresse';
@@ -52,4 +52,14 @@
 {/if}
 
 <!-- svelte-ignore a11y_media_has_caption -->
-<video bind:this={videoElement} style="width: 100%; max-height: 100vh;min-height: 50vh;border: 1px solid black; background-color: #ccc;"></video>
+<video bind:this={videoElement}></video>
+
+<style>
+    video {
+        width: 100%;
+        max-height: calc(100vh - 5rem);
+        min-height: 50vh;
+        border: 1px solid black;
+        background-color: #ccc;
+    }
+</style>
