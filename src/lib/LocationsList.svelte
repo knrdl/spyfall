@@ -7,7 +7,9 @@
         <li class:selected={selectedLocation === location}>{location}</li>
     {/each}
     {#if selectedLocation === null}
-        <li class="spy-hint">Spion</li>
+        <li class="spy-hint left">Spion</li>
+        <li class="spy-hint middle">Spion</li>
+        <li class="spy-hint right">Spion</li>
     {/if}
 </ul>
 
@@ -39,7 +41,6 @@
         text-transform: uppercase;
         overflow: hidden;
         top: calc(50% - 3rem);
-        left: calc(50% - 8rem);
         color: #fff4;
         font-size: 4rem;
         pointer-events: none;
@@ -56,6 +57,16 @@
         left: 0;
         top: 0;
         color: #fff4;
+    }
+
+    .spy-hint.left {
+        left: calc(25% - 8rem);
+    }
+    .spy-hint.middle {
+        left: calc(50% - 8rem);
+    }
+    .spy-hint.right {
+        left: calc(75% - 8rem);
     }
 
     ul:has(.spy-hint) {

@@ -1,14 +1,15 @@
 <script>
     import QRCode from 'qrcode/lib/browser';
-    import { tick } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import CopyToClipboardButton from './CopyToClipboardButton.svelte';
-    import { createGame, gameState, startRound } from '../../lib/gamestate.svelte.js';
+    import { createGame, gameState, startRound } from '../../lib/gamestate.svelte';
+    import { retrieveData, storeData } from '../../lib/storage';
     import { fade } from 'svelte/transition';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
 
     let roundMinutes = $state(8);
 
-    let locations = $state([
+    const defaultLocations = [
         'Autowerkstatt',
         'Bank',
         'Botschaft',
@@ -41,7 +42,9 @@
         'Zirkuszelt',
         'Zoo',
         'Zug',
-    ]);
+    ];
+
+    let locations = $state(defaultLocations);
     let newLocation = $state('');
 
     let qrCodeCanvas = $state();
@@ -57,6 +60,11 @@
                     if (error) console.error(error);
                 });
             });
+    });
+
+    onMount(() => {
+        const savedLocs = retrieveData('locations');
+        if (savedLocs) locations = savedLocs;
     });
 </script>
 
@@ -76,6 +84,7 @@
                             onclick={() => {
                                 locations.splice(locations.indexOf(location), 1);
                                 locations = locations;
+                                storeData('locations', locations);
                             }}>&times;</button
                         >
                     </li>
@@ -87,6 +96,7 @@
                             locations = [...locations, newLocation];
                             locations = locations.sort((a, b) => a.localeCompare(b));
                             newLocation = '';
+                            storeData('locations', locations);
                         }}
                         class="inpbtn"
                     >

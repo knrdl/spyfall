@@ -326,4 +326,14 @@
     .announce.non-spy {
         background-color: rgba(15, 0, 128, 0.729);
     }
+
+    details[open] summary::after {
+        content: 'verstecken';
+        font-weight: 100;
+    }
+
+    details summary::after {
+        content: 'anzeigen';
+        font-weight: 100;
+    }
 </style>

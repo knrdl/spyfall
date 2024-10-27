@@ -2,6 +2,7 @@
     import { onDestroy, onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import QrScanner from 'qr-scanner';
+    import { fade } from 'svelte/transition';
 
     let videoElement = $state();
     let hasCamera = $state(true);
@@ -44,7 +45,11 @@
     });
 </script>
 
-{errMsg}
+{#if errMsg}
+    <p style="text-align: center;" transition:fade>
+        {errMsg}
+    </p>
+{/if}
 
 <!-- svelte-ignore a11y_media_has_caption -->
-<video bind:this={videoElement} style="height: 10rem;width:100%"></video>
+<video bind:this={videoElement} style="width: 100%; max-height: 100vh;border: 1px solid black; background-color: #ccc;"></video>
