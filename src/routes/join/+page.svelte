@@ -4,19 +4,24 @@
     import { onMount } from 'svelte';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
     import LocationsList from '../../lib/LocationsList.svelte';
-    import { goto } from '$app/navigation';
+    import { goto, navigating } from '$app/navigation';
 
     let gameId = $state();
     let gameIdLoaded = $state(false);
 
-    onMount(async () => {
-        gameId = new URLSearchParams(location.search).get('id') || null;
-        gameIdLoaded = true;
+    onMount(() => {
+        loadGameId();
     });
 
     $effect(() => {
+        if ($navigating) loadGameId();
         if (gameId) joinGame(gameId);
     });
+
+    function loadGameId() {
+        gameId = new URLSearchParams(location.search).get('id') || null;
+        gameIdLoaded = true;
+    }
 </script>
 
 <article>

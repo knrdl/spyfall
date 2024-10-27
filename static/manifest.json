@@ -1,6 +1,7 @@
 {
   "name": "SpyFall",
   "description": "Spyfall Spiel",
+  "display": "standalone",
   "theme_color": "#00aeff",
   "background_color": "#2e2e2e",
   "short_name": "SpyFall",
