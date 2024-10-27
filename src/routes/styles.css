@@ -121,8 +121,9 @@ details summary:hover {
 }
 
 article {
-    background-color: #000000cc;
+    background-image: linear-gradient(to bottom, #000000dd 0%, #000000dd calc(100% - 10rem), #000000cc calc(100% - 8rem), #000000aa calc(100% - 5rem), #00000066 calc(100% - 2rem), transparent 100%);
     padding: 1rem;
+    padding-bottom: 6rem;
     animation: slide-top 0.25s forwards;
 }
 

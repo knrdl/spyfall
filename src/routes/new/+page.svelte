@@ -2,9 +2,8 @@
     import QRCode from 'qrcode/lib/browser';
     import { tick } from 'svelte';
     import CopyToClipboardButton from './CopyToClipboardButton.svelte';
-    import { createGame, gameState, startGame } from '../../lib/peering.svelte';
+    import { createGame, gameState, startRound } from '../../lib/gamestate.svelte.js';
     import { fade } from 'svelte/transition';
-    import { goto } from '$app/navigation';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
 
     let roundMinutes = $state(8);
@@ -152,14 +151,16 @@
                 class="btn blue"
                 onclick={async () => {
                     if (gameState.playerCount >= 3) {
-                        await startGame();
-                        goto('/play');
+                        await startRound();
                     } else alert('Es werden mindestens 3 Mitspielende benötigt');
                 }}
             >
                 Spiel starten
             </button>
-            <button type="button" class="btn red">abbrechen</button>
+            <button type="button" class="btn red">
+                abbrechen
+                <!-- todo -->
+            </button>
         </section>
     </article>
 {/if}

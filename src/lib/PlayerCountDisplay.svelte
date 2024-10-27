@@ -1,6 +1,6 @@
 <script>
     import { spring } from 'svelte/motion';
-    import { gameState } from './peering.svelte';
+    import { gameState } from './gamestate.svelte';
 
     const displayed_count = spring(0);
 

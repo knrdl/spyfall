@@ -12,8 +12,8 @@
 <style>
     .vote {
         display: block;
-        width: 10rem;
-        height: 10rem;
+        width: var(--size, 10rem);
+        height: var(--size, 10rem);
         border-radius: 300px;
         border-width: 0.5rem;
         border-style: solid;
