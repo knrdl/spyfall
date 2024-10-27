@@ -20,6 +20,7 @@
         background-clip: text;
         color: rgba(0, 0, 0, 0.3);
         text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 15px;
+        word-wrap: break-word;
 
         animation: fade 1s backwards;
     }

@@ -52,4 +52,4 @@
 {/if}
 
 <!-- svelte-ignore a11y_media_has_caption -->
-<video bind:this={videoElement} style="width: 100%; max-height: 100vh;border: 1px solid black; background-color: #ccc;"></video>
+<video bind:this={videoElement} style="width: 100%; max-height: 100vh;min-height: 50vh;border: 1px solid black; background-color: #ccc;"></video>

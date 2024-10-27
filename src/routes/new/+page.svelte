@@ -2,10 +2,11 @@
     import QRCode from 'qrcode/lib/browser';
     import { onMount, tick } from 'svelte';
     import CopyToClipboardButton from './CopyToClipboardButton.svelte';
-    import { createGame, gameState, startRound } from '../../lib/gamestate.svelte';
+    import { connection, createGame, gameState, startRound } from '../../lib/gamestate.svelte';
     import { retrieveData, storeData } from '../../lib/storage';
     import { fade } from 'svelte/transition';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
+    import { goto } from '$app/navigation';
 
     let roundMinutes = $state(8);
 
@@ -115,7 +116,7 @@
             </label>
         </section>
 
-        <section style="display: flex; justify-content: center;align-items: center; margin-top: 1rem">
+        <section style="display: flex; flex-wrap: wrap; justify-content: center;align-items: center; margin-top: 1rem">
             <button type="button" onclick={() => createGame(roundMinutes, locations)} class="btn blue"> Spiel erstellen </button>
             <a href="./" class="btn red">Abbrechen</a>
         </section>
@@ -167,9 +168,16 @@
             >
                 Spiel starten
             </button>
-            <button type="button" class="btn red">
+            <button
+                type="button"
+                class="btn red"
+                onclick={() => {
+                    gameState.gameId = undefined;
+                    connection.disconnect()
+                    goto('./');
+                }}
+            >
                 abbrechen
-                <!-- todo -->
             </button>
         </section>
     </article>

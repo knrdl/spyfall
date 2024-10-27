@@ -1,17 +1,15 @@
 import Peer from 'peerjs'
 
 export class Connection { // abstract base class
-    async request(type, payload = undefined) {
-    }
+    async request(type, payload = undefined) { }
 
-    onPeering(myConnectionId) {
-    }
+    onPeering(myConnectionId) { }
 
     async connect() { }
 
-    async onMessage(connectionId, type, payload) {
+    async disconnect() { }
 
-    }
+    async onMessage(connectionId, type, payload) { }
 
     async requestVote() {
         await this.request('request-vote')
@@ -29,7 +27,10 @@ export class Connection { // abstract base class
 export class LeaderConnection extends Connection {
     /** @type {Map<string, import('peerjs').DataConnection>} */
     #connections = new Map()
+    /** @type {string} */
     #gameId
+    /** @type {Peer} */
+    #peer
 
     constructor(gameId) {
         super()
@@ -37,20 +38,18 @@ export class LeaderConnection extends Connection {
     }
 
     /** @returns {boolean} */
-    onFollowerConnecting(followerConnectionId) {
-    }
+    onFollowerConnecting(followerConnectionId) { }
 
-    onFollowerConnected(followerConnectionId) {
-
-    }
+    onFollowerConnected(followerConnectionId) { }
+    onFollowerDisconnected(followerConnectionId) { }
 
     connect() {
         return new Promise((resolve) => {
-            const peer = new Peer(this.#gameId)
-            peer.on('open', (id) => {
+            this.#peer = new Peer(this.#gameId)
+            this.#peer.on('open', (id) => {
                 this.onPeering(id)
 
-                peer.on('connection', (conn) => {
+                this.#peer.on('connection', (conn) => {
                     if (this.onFollowerConnecting(conn.peer)) {
                         this.#connections.set(conn.peer, conn)
                         conn.on('data', async ({ type, payload }) => {
@@ -60,9 +59,9 @@ export class LeaderConnection extends Connection {
                         conn.on('close', (e) => {
                             console.log('conn to follower closed:', e)
                             this.#connections.delete(conn.peer)
-                            // this.updatePlayerCount() // todo
+                            this.onFollowerDisconnected(conn.peer)
                         })
-                        conn.on('error', (e) => console.log('leader conn error:', e)) // todo
+                        conn.on('error', (e) => console.error('leader conn error:', e))
 
                         conn.on('open', async () => {
                             this.onFollowerConnected(conn.peer)
@@ -72,10 +71,15 @@ export class LeaderConnection extends Connection {
 
                 resolve()
             })
-            peer.on('close', () => console.log('leader close')) // todo
-            peer.on('disconnected', () => console.log('leader disconnected')) // todo
-            peer.on('error', (e) => console.log('leader error', e)) // todo
+            this.#peer.on('close', () => console.log('leader close')) // todo
+            this.#peer.on('disconnected', () => console.log('leader disconnected')) // todo
+            this.#peer.on('error', (e) => console.error('leader error:', e))
         })
+    }
+
+    async disconnect() {
+        this.#connections?.forEach(conn => conn.close())
+        this.#peer?.disconnect()
     }
 
     async request(type, payload = undefined) {
@@ -99,8 +103,12 @@ export class LeaderConnection extends Connection {
 }
 
 export class FollowerConnection extends Connection {
+    /** @type {import('peerjs').DataConnection} */
     #connection
+    /** @type {string} */
     #gameId
+    /** @type {Peer} */
+    #peer
 
     constructor(gameId) {
         super()
@@ -109,15 +117,15 @@ export class FollowerConnection extends Connection {
 
     connect() {
         return new Promise((resolve) => {
-            const peer = new Peer()
-            peer.on('close', () => console.log('follower close')) // todo
-            peer.on('disconnected', () => console.log('follower disconnected')) // todo
-            peer.on('error', (e) => console.log('follower error', e)) // todo
+            this.#peer = new Peer()
+            this.#peer.on('close', () => console.log('follower close')) // todo
+            this.#peer.on('disconnected', () => console.log('follower disconnected')) // todo
+            this.#peer.on('error', (e) => console.error('follower error:', e))
 
-            peer.on('open', (id) => {
+            this.#peer.on('open', (id) => {
                 this.onPeering(id)
 
-                const conn = peer.connect(this.#gameId)
+                const conn = this.#peer.connect(this.#gameId)
 
                 conn.on('open', () => {
                     this.#connection = conn
@@ -130,9 +138,14 @@ export class FollowerConnection extends Connection {
                 })
 
                 conn.on('close', () => console.log('follower conn close')) // todo
-                conn.on('error', (e) => console.log('follower conn error:', e)) // todo
+                conn.on('error', (e) => console.error('follower conn error:', e))
             })
         })
+    }
+
+    async disconnect() {
+        this.#connection?.close()
+        this.#peer?.disconnect()
     }
 
     async request(type, payload = undefined) {

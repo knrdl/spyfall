@@ -1,20 +1,26 @@
 <script>
     import QrCodeScanner from './QrCodeScanner.svelte';
-    import { joinGame, gameState } from '../../lib/gamestate.svelte';
+    import { joinGame, gameState, connection } from '../../lib/gamestate.svelte';
     import { onMount } from 'svelte';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
     import LocationsList from '../../lib/LocationsList.svelte';
+    import { goto } from '$app/navigation';
 
     let gameId = $state();
+    let gameIdLoaded = $state(false);
 
     onMount(async () => {
         gameId = new URLSearchParams(location.search).get('id') || null;
-        await joinGame(gameId);
+        gameIdLoaded = true;
+    });
+
+    $effect(() => {
+        if (gameId) joinGame(gameId);
     });
 </script>
 
 <article>
-    {#if !gameId}
+    {#if gameIdLoaded && !gameId}
         <section>
             <QrCodeScanner />
         </section>
@@ -50,9 +56,16 @@
             <div style="text-align: center; color: #aaa">Nur wer das Spiel erstellt hat, kann es auch starten.</div>
         </section>
         <section style="display: flex; justify-content: center;">
-            <button type="button" class="btn red">
+            <button
+                type="button"
+                class="btn red"
+                onclick={() => {
+                    gameState.gameId = undefined;
+                    connection.disconnect();
+                    goto('./');
+                }}
+            >
                 Spiel verlassen
-                <!-- todo -->
             </button>
         </section>
     {:else}
