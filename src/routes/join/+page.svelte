@@ -8,32 +8,34 @@
     import { navigating } from '$app/stores';
 
     let gameId = $state();
-    let gameIdLoaded = $state(false);
+    let isMounted = $state(false);
 
     onMount(() => {
         loadGameId();
+        isMounted = true;
     });
 
     $effect(() => {
         if ($navigating) loadGameId();
-        if (gameId) joinGame(gameId);
     });
 
     function loadGameId() {
-        gameId = new URLSearchParams(location.search).get('id') || null;
-        gameIdLoaded = true;
+        if (!gameId) {
+            gameId = new URLSearchParams(location.search).get('id') || null;
+            if (gameId) joinGame(gameId);
+        }
     }
 </script>
 
 <article>
-    {#if gameIdLoaded && !gameId}
+    {#if isMounted && !gameId}
         <section>
             <QrCodeScanner />
         </section>
         <section>
             <a href="./" class="btn">Zurück</a>
         </section>
-    {:else if gameIdLoaded && gameState.playerCount}
+    {:else if isMounted && gameState.playerCount}
         {#if gameState.locations}
             <section>
                 <header>Mögliche Orte</header>
