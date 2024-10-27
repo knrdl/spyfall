@@ -4,7 +4,8 @@
     import { onMount } from 'svelte';
     import PlayerCountDisplay from '../../lib/PlayerCountDisplay.svelte';
     import LocationsList from '../../lib/LocationsList.svelte';
-    import { goto, navigating } from '$app/navigation';
+    import { goto } from '$app/navigation';
+    import { navigating } from '$app/stores';
 
     let gameId = $state();
     let gameIdLoaded = $state(false);
@@ -32,7 +33,7 @@
         <section>
             <a href="./" class="btn">Zurück</a>
         </section>
-    {:else if gameState.playerCount}
+    {:else if gameIdLoaded && gameState.playerCount}
         {#if gameState.locations}
             <section>
                 <header>Mögliche Orte</header>
