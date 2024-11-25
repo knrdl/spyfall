@@ -66,6 +66,7 @@ class GameLeaderConnection extends LeaderConnection {
     async onFollowerDisconnected(followerConnectionId) {
         if (!gameState.connectionIds.delete(followerConnectionId)) console.error('followerConnectionId', followerConnectionId, 'was not in', gameState.connectionIds)
         await this.broadcast('player-count', gameState.connectionIds.size + 1)
+        // todo: handle player disconnect during game
     }
 
     async onMessage(connectionId, type, payload) {
